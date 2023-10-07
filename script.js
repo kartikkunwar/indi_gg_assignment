@@ -1,47 +1,47 @@
 const allquestions = [
     {
-        question: "Who won the 2011 World Cup ?",
+        question: "Which of the following keywords is used to define a variable in Javascript?",
         answer: [
-            { content: "India", isright: true },
-            { content: "England", isright: false },
-            { content: "Australia", isright: false },
-            { content: "Neitherland", isright: false },
+            { content: "var", isright: false },
+            { content: "let", isright: false },
+            { content: "Both", isright: true },
+            { content: "None", isright: false },
         ]
     },
     {
-        question: "Which is Spelled Incorrectly ?",
+        question: "How can a datatype be declared to be a constant type?",
         answer: [
-            { content: "one", isright: false },
-            { content: "two", isright: false },
-            { content: "thre", isright: true },
-            { content: "four", isright: false },
+            { content: "const", isright: true },
+            { content: "var", isright: false },
+            { content: "let", isright: false },
+            { content: "constant", isright: false },
         ]
     },
     {
-        question: "Which is the capital city of U.P ?",
+        question: "Which of the following are closures in Javascript?",
         answer: [
-            { content: "Meerut", isright: false },
-            { content: "Lucknow", isright: true },
-            { content: "Noida", isright: false },
-            { content: "Gaziabad", isright: false },
+            { content: "Variables", isright: false },
+            { content: "Functions", isright: false },
+            { content: "Objects", isright: false },
+            { content: "All of the above", isright: true },
         ]
     },
     {
-        question: "Guess which is correct",
+        question: "How do we write a comment in javascript?",
         answer: [
-            { content: "one", isright: false },
-            { content: "two", isright: false },
-            { content: "three", isright: false },
-            { content: "four", isright: true },
+            { content: "//", isright: true },
+            { content: "/**/", isright: false },
+            { content: "#", isright: false },
+            { content: "$", isright: false },
         ]
     },
     {
-        question: "What is spelled incorrectly",
+        question: "How to stop an interval timer in Javascript?",
         answer: [
-            { content: "Fire", isright: false },
-            { content: "Stone", isright: false },
-            { content: "Surface", isright: false },
-            { content: "Incorectly", isright: true },
+            { content: "clearTimer", isright: false },
+            { content: "intervalOver", isright: false },
+            { content: "clearInterval", isright: true },
+            { content: "None of the above", isright: false },
         ]
     }
 ]
@@ -54,10 +54,20 @@ const nxt = document.getElementById("next");
 const time=document.getElementById("timer")
 let ind = 0;
 let score = 0;
-let total = 5;
+let total = 10;
 let timer;
 
 start()
+
+function getRight(){
+    Array.from(butt.children).forEach(el => {
+        if (el.dataset.isright === "true") {
+            el.classList.add("right")
+        }
+        el.disabled = true;
+    })
+    nxt.style.display = "block"
+}
 
 function start() {
     ind = 0;
@@ -68,16 +78,7 @@ function start() {
         time.innerHTML=`${total} s Left`
         time.style.display="block"
         if (total < 1) {
-            if (ind < allquestions.length) {
-                ind++;
-                if (ind < allquestions.length) {
-                    nextquestion()
-                } else {
-                    showscore()
-                }
-            } else {
-                showscore()
-            }
+            getRight()
         } else {
             total--
         }
@@ -86,7 +87,7 @@ function start() {
 }
 
 function nextquestion() {
-    total = 5
+    total = 10
     resetall()
     let current = allquestions[ind];
     let num = ind + 1;
@@ -120,13 +121,7 @@ function select(e) {
     } else {
         btn.classList.add("wrong")
     }
-    Array.from(butt.children).forEach(el => {
-        if (el.dataset.isright === "true") {
-            el.classList.add("right")
-        }
-        el.disabled = true;
-    })
-    nxt.style.display = "block"
+    getRight()
 }
 
 nxt.addEventListener("click", () => {
